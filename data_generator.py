@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 def generate_datasets():
-    data_dir = r"C:\Users\aadis\Downloads\dataset"
+    data_dir = os.path.join(os.path.dirname(__file__), "dataset")
     os.makedirs(data_dir, exist_ok=True)
     n_samples = 100
 

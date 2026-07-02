@@ -38,7 +38,7 @@ tab_learn, tab_quiz = st.tabs(["LEARN", "ASSESSMENT — 50 Q's"])
 
 @st.cache_data
 def load_data():
-    d = r"C:\Users\aadis\Downloads\dataset"
+    d = os.path.join(os.path.dirname(__file__), "..", "dataset")
     return {
         "RealEstate": pd.read_csv(os.path.join(d, "Real_Estate_Dataset.csv")),
         "LTV": pd.read_csv(os.path.join(d, "Customer_LTV_Dataset.csv")),

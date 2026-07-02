@@ -1,6 +1,6 @@
 # ISLP Interactive Learning & Visualization Tool 🏎️
 
-> **Envisioned by Aadi Singh** — A learning and visualization tool for *An Introduction to Statistical Learning with Applications in Python/R* (ISLP), built for the Applied AI/ML course under the Business Data Analytics (BDA) program. Find it on "".
+> **Envisioned by Aadi** — A learning and visualization tool for *An Introduction to Statistical Learning with Applications in Python/R* (ISLP), built for the Applied AI/ML course under the Business Data Analytics (BDA) program.
 
 ---
 
@@ -46,7 +46,7 @@ This Streamlit web application transforms the dense mathematical theory of ISLP 
 - pip
 
 ### Installation
-For local Install(why??)
+
 ```bash
 # Clone the repository
 git clone https://github.com/aadis12/ISLP-Interactive-WebApp.git
@@ -62,7 +62,7 @@ python data_generator.py
 python -m streamlit run app.py
 ```
 
-The app will open at `http://localhost:xxxx`(depends!).
+The app will open at `http://localhost:8501`.
 
 ---
 

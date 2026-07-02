@@ -48,7 +48,7 @@ At its core, **Statistical Learning** uses data to:
 
     @st.cache_data
     def load_data():
-        fp = os.path.join(os.path.dirname(__file__), "..", "dataset", "Employee_Productivity_Dataset.csv")
+        fp = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset", "Employee_Productivity_Dataset.csv"))
         return pd.read_csv(fp) if os.path.exists(fp) else None
 
     df = load_data()

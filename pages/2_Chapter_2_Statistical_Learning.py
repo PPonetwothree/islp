@@ -44,16 +44,30 @@ def load_datasets():
         d = "/home/pyodide/dataset"
     else:
         d = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset"))
-    return {
-        "RealEstate": pd.read_csv(os.path.join(d, "Real_Estate_Dataset.csv")),
-        "LTV": pd.read_csv(os.path.join(d, "Customer_LTV_Dataset.csv")),
-        "Factory": pd.read_csv(os.path.join(d, "Factory_Output_Dataset.csv")),
-        "Employee": pd.read_csv(os.path.join(d, "Employee_Productivity_Dataset.csv")),
-        "Loan": pd.read_csv(os.path.join(d, "Loan_Approval_Dataset.csv")),
-        "Churn": pd.read_csv(os.path.join(d, "Customer_Churn_Dataset.csv")),
+    
+    files = {
+        "RealEstate": "Real_Estate_Dataset.csv",
+        "LTV": "Customer_LTV_Dataset.csv",
+        "Factory": "Factory_Output_Dataset.csv",
+        "Employee": "Employee_Productivity_Dataset.csv",
+        "Loan": "Loan_Approval_Dataset.csv",
+        "Churn": "Customer_Churn_Dataset.csv",
     }
+    
+    datasets = {}
+    for key, filename in files.items():
+        fp = os.path.join(d, filename)
+        if os.path.exists(fp):
+            datasets[key] = pd.read_csv(fp)
+        else:
+            return None
+    return datasets
 
 ds = load_datasets()
+
+if ds is None:
+    st.error("⚠️ Datasets not found! If running locally, run `python data_generator.py` first. On Netlify, ensure `dataset/*.csv` is committed.")
+    st.stop()
 
 tab1, tab2, tab3, tab4, tab5, tab_quiz = st.tabs([
     "1. MASTER EQ & SUPERVISED/UNSUPERVISED",

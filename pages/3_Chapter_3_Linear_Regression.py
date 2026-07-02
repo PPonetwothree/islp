@@ -43,13 +43,27 @@ def load_data():
         d = "/home/pyodide/dataset"
     else:
         d = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset"))
-    return {
-        "RealEstate": pd.read_csv(os.path.join(d, "Real_Estate_Dataset.csv")),
-        "LTV": pd.read_csv(os.path.join(d, "Customer_LTV_Dataset.csv")),
-        "Factory": pd.read_csv(os.path.join(d, "Factory_Output_Dataset.csv")),
+    
+    files = {
+        "RealEstate": "Real_Estate_Dataset.csv",
+        "LTV": "Customer_LTV_Dataset.csv",
+        "Factory": "Factory_Output_Dataset.csv",
     }
+    
+    datasets = {}
+    for key, filename in files.items():
+        fp = os.path.join(d, filename)
+        if os.path.exists(fp):
+            datasets[key] = pd.read_csv(fp)
+        else:
+            return None
+    return datasets
 
 ds = load_data()
+
+if ds is None:
+    st.error("⚠️ Datasets not found! If running locally, run `python data_generator.py` first. On Netlify, ensure `dataset/*.csv` is committed.")
+    st.stop()
 
 with tab_learn:
     st.header("The Fundamental Parametric Model")

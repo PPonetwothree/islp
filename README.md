@@ -31,21 +31,20 @@ This Streamlit web application transforms the dense mathematical theory of ISLP 
 
 ## Tech Stack
 
-- **Framework:** [Streamlit](https://streamlit.io/)
-- **Language:** Python 3.x
-- **Libraries:** pandas, numpy, matplotlib, scikit-learn
-- **Styling:** Custom CSS (Inter + JetBrains Mono fonts, dark-mode radial gradients)
+- **Framework:** [Streamlit](https://streamlit.io/) compiled to WebAssembly via [Stlite](https://github.com/whitphx/stlite)
+- **Language:** Python 3.x (running completely in the browser via Pyodide)
+- **Libraries:** `pandas`, `numpy`, `matplotlib`, `scikit-learn`
+- **Hosting:** Static HTML on [Netlify](https://www.netlify.com/)
 
 ---
 
 ## Getting Started
 
-### Prerequisites
+Because this application uses Stlite, the entire Python data science environment runs directly in the user's browser using WebAssembly. There is **no Python backend server required**. 
 
-- Python 3.8+
-- pip
+### Local Development (Standard Streamlit)
 
-### Installation
+If you want to run the app locally using standard Python:
 
 ```bash
 # Clone the repository
@@ -53,26 +52,37 @@ git clone https://github.com/aadis12/ISLP-Interactive-WebApp.git
 cd ISLP-Interactive-WebApp
 
 # Install dependencies
-pip install streamlit pandas numpy matplotlib scikit-learn
+pip install -r requirements.txt
 
-# Generate the custom datasets
-python data_generator.py
-
-# Run the application
+# Run the standard Streamlit server
 python -m streamlit run app.py
 ```
 
-The app will open at `http://localhost:8501`.
+### Deploying to Netlify (Serverless)
+
+This repository is pre-configured to deploy automatically on Netlify as a static site.
+
+1. Create a new site on [Netlify](https://app.netlify.com/start).
+2. Connect your GitHub repository (`ISLP-Interactive-WebApp`).
+3. Netlify will automatically read the `netlify.toml` file.
+4. The build command (`python build_stlite.py`) will bundle all `.py` files and `.csv` datasets into a single `index.html`.
+5. Click **Deploy Site**.
+
+*Note: The initial page load on Netlify will take a few seconds as the browser downloads the WebAssembly Python environment (Pyodide). Subsequent loads are cached and extremely fast.*
 
 ---
 
 ## Project Structure
 
-```
+```text
 islp_webapp/
 ├── app.py                              # Main entry point & global UI/CSS
 ├── data_generator.py                   # Generates 6 custom business datasets
 ├── quiz_engine.py                      # Shared quiz rendering utility
+├── build_stlite.py                     # [NEW] Bundles Python files into Stlite index.html
+├── netlify.toml                        # [NEW] Netlify build configuration
+├── index.html                          # [AUTO-GENERATED] Stlite WebAssembly host
+├── dataset/                            # 6 generated business datasets (.csv)
 ├── pages/
 │   ├── 1_Chapter_1_Intro.py            # Module 1: Data Foundations
 │   ├── 2_Chapter_2_Statistical_Learning.py  # Module 2: Core Theory

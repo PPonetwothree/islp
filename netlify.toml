@@ -1,0 +1,10 @@
+[build]
+  command = "python build_stlite.py"
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Required for WebAssembly SharedArrayBuffer (which Pyodide uses for better performance)
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"

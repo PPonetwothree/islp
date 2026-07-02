@@ -46,9 +46,13 @@ At its core, **Statistical Learning** uses data to:
 2. **Infer** the relationship between variables.
     """)
 
+    import sys
     @st.cache_data
     def load_data():
-        fp = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset", "Employee_Productivity_Dataset.csv"))
+        if sys.platform == "emscripten":
+            fp = "/home/pyodide/dataset/Employee_Productivity_Dataset.csv"
+        else:
+            fp = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset", "Employee_Productivity_Dataset.csv"))
         return pd.read_csv(fp) if os.path.exists(fp) else None
 
     df = load_data()

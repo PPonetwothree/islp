@@ -37,9 +37,13 @@ st.markdown("""
 
 st.title("MODULE 2 — Statistical Learning Engine 🏎️")
 
+import sys
 @st.cache_data
 def load_datasets():
-    d = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset"))
+    if sys.platform == "emscripten":
+        d = "/home/pyodide/dataset"
+    else:
+        d = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dataset"))
     return {
         "RealEstate": pd.read_csv(os.path.join(d, "Real_Estate_Dataset.csv")),
         "LTV": pd.read_csv(os.path.join(d, "Customer_LTV_Dataset.csv")),
